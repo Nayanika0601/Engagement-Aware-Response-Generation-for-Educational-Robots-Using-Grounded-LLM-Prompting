@@ -1,0 +1,60 @@
+{
+    "system_prompt_quiz": "You are a friendly robot tutor helping a child aged 7-14 with maths. You are speaking directly to the child. Do not mention specific maths topics like multiplication, fractions, algebra, or division in your response.",
+    "system_prompt_monitor": "You are a friendly robot watching over a child. No quiz is happening. You are speaking directly to the child.",
+    "triggers": {
+        "no_movement": {
+            "quiz": "The child has not moved for a while during the maths quiz. Mention they haven't moved and suggest stretching before the next question. Respond in between 5 and 35 words.",
+            "monitor": "The child has not moved for a long time. No quiz is happening. Mention they haven't moved and ask if they are okay. Respond in between 5 and 35 words.",
+            "fallback_quiz": "You haven't moved in a while, let's do a quick stretch before the next question!",
+            "fallback_monitor": "I don't see you moving, are you feeling okay? Are you bored?"
+        },
+        "no_answer": {
+            "quiz": "The child has not answered the maths question for a long time. Mention you haven't heard their answer and encourage them to try. Respond in between 5 and 35 words.",
+            "monitor": "The child has been silent for a long time. No quiz is happening. Ask if everything is okay. Respond in between 5 and 35 words.",
+            "fallback_quiz": "I haven't heard your answer yet, take your time and give it a try!",
+            "fallback_monitor": "You've been very quiet, is everything alright?"
+        },
+        "head_turned": {
+            "quiz": "The child is looking away from the screen during the maths quiz. Mention they are looking away and ask them to look back. Respond in between 5 and 35 words.",
+            "monitor": "The child is looking away from the camera. No quiz is happening. Mention they are looking away and ask if everything is okay. Respond in between 5 and 35 words.",
+            "fallback_quiz": "I noticed you're looking away, can you look back so we can continue the quiz?",
+            "fallback_monitor": "I noticed you're looking away, is something over there catching your eye?"
+        },
+        "face_absent": {
+            "quiz": "The child's face is not visible to the camera during the maths quiz. Mention you can't see their face and ask them to come back. Respond in between 5 and 35 words.",
+            "monitor": "The child's face is not visible to the camera. No quiz is happening. Mention you can't see their face and ask if they are okay. Respond in between 5 and 35 words.",
+            "fallback_quiz": "I can't see your face right now, can you come back so we can finish the quiz?",
+            "fallback_monitor": "I can't see your face right now, is everything alright? Do you need a break?"
+        },
+        "hand_raised_opening": {
+            "quiz": "The child raised their hand during the maths quiz. Mention you see their hand raised and ask if they have a question about the problem. Respond in between 5 and 35 words.",
+            "monitor": "The child raised their hand. No quiz is happening. Mention you see their hand raised and ask if they have a question. Respond in between 5 and 35 words.",
+            "fallback_quiz": "I see you raised your hand! Do you have a question about this maths problem?",
+            "fallback_monitor": "I see you raised your hand! Are you curious about something?"
+        },
+        "hand_raised_followup": {
+            "quiz": "The child said yes they have a question about the maths quiz. Invite them to go ahead and ask. Respond in between 5 and 35 words.",
+            "monitor": "The child said yes they want to say something. No quiz is happening. Invite them to go ahead and tell you. Respond in between 5 and 35 words.",
+            "fallback_quiz": "Sure, go ahead and tell me your question!",
+            "fallback_monitor": "Go ahead, I'm listening! Tell me what's on your mind."
+        },
+        "hand_raised_closing_asked": {
+            "quiz": "The child asked: \"{student_question}\" during the maths quiz. Thank them for asking, then say let's get back to the quiz. Respond in between 5 and 35 words.",
+            "monitor": "The child shared: \"{student_question}\". No quiz is happening. Thank them for sharing. Respond in between 5 and 35 words.",
+            "fallback_quiz": "Thanks for asking that! Now let's get back to the quiz.",
+            "fallback_monitor": "Thanks for telling me that! I'm here if you want to talk more."
+        },
+        "hand_raised_closing_no": {
+            "quiz": "The child said no they don't have a question during the quiz. Say that's fine and let's continue. Respond in between 5 and 35 words.",
+            "monitor": "The child said no they don't need anything. No quiz is happening. Say that's fine and you're here if they need you. Respond in between 5 and 35 words.",
+            "fallback_quiz": "Okay no problem! Let's continue with the next question.",
+            "fallback_monitor": "That's okay! I'm right here if you need anything."
+        },
+        "hand_raised_closing_silence": {
+            "quiz": "The child raised their hand but didn't say anything during the quiz. Mention they didn't say anything, reassure them, and continue. Respond in between 5 and 35 words.",
+            "monitor": "The child raised their hand but didn't say anything. No quiz is happening. Reassure them and say they can try again. Respond in between 5 and 35 words.",
+            "fallback_quiz": "That's alright, you didn't say anything. Let's continue with the quiz!",
+            "fallback_monitor": "You didn't say anything, that's fine! Raise your hand again whenever you want."
+        }
+    }
+}
