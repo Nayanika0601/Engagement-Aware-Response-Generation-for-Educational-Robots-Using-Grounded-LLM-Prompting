@@ -5,9 +5,6 @@ This repository contains the research implementation of a spoken maths tutor tha
 
 Both modes write the same log schema — including the exact prompt sent, the raw model output, and every rejected retry — so the two conditions can be compared offline without re-running sessions.
 
-> [!IMPORTANT]
-> The reviewed snapshot runs from a fresh clone, but it is **not publication-ready**. Before release, add `requirements.txt`, `LICENSE`, `CITATION.cff`, and `config/settings.example.json`; resolve the duplicated trigger logic in `engagement_manager.py`; and correct the threshold values printed in the `main.py` console banner. See [Required corrections before publishing](#required-corrections-before-publishing).
-
 ## Experimental conditions
 
 | Condition | Name | Information available to the LLM | Intervention authority |
@@ -453,18 +450,6 @@ The log is rewritten in full after every question and every engagement event, so
 5. **TTS lock handling is fragile off Windows.** In the `pyttsx3` path, `speak_async` acquires the shared lock on the calling thread and releases it on a background thread, and `stop()` releases a lock it may not hold while swallowing the resulting `RuntimeError`. Barge-in interruption is unreliable on non-Windows machines.
 6. **Import-time side effects.** Importing `speech_input` loads and warms the Whisper model; importing `mediapipe_processor` may download roughly 9 MB of model files. Both make the modules slow to import and awkward to unit test.
 7. **Cooldowns are not persisted.** All cooldown state lives in memory and resets between phases only insofar as `SharedState` is reconstructed, so trigger spacing is not comparable across a restart.
-
-## Required corrections before publishing
-
-1. **Remove or wire in `engagement_manager.py`.** `main.py` imports none of it and reimplements trigger detection inline. The two implementations already disagree: `engagement_manager._condition_met` treats `face_absent` as `not face and no_movement_sec >= 3`, while `main.py` uses a dedicated face-absence timer. `no_answer` exists only in the unused module, so the `thresholds.no_answer_sec` setting has no runtime effect.
-2. **Correct the console banner in `main.py`.** It prints "Hand raise 5s" and "Face absent 5s"; the actual values are `_HAND_RAISE_SEC = 3.0` and `face_absent_sec = 3`. Anyone reading the console will record the wrong condition.
-3. **Consolidate configuration.** Move `MAX_QUESTIONS`, `_HAND_RAISE_SEC`, and the `mediapipe_processor.py` constants into `settings.json`.
-4. **Reconcile the two stillness thresholds.** `NO_MOVEMENT_TIMEOUT_SEC` (10.0, vision module, sets `still_there_prompt` and the overlay warning) and `thresholds.no_movement_sec` (10, engagement alert) are numerically equal but independently defined. Decide whether they are one stage or two, then rename or merge them.
-5. **Add `requirements.txt` with pinned versions**, plus `requirements-lock.txt` for the environment used to produce reported results.
-6. **Add `config/settings.example.json`** and gitignore `config/settings.json`, `mode_a/`, `mode_b1/`, `observations_*.json`, `__pycache__/`, and `*.pyc`.
-7. **Either compute `speech_energy` or remove it** from the `Observation` dataclass and the prompt block. A constant field in the prompt is a confound in the Mode B condition, where the model is supposed to reason from sensor state.
-8. **Rename `gaze_on_robot`** to reflect that it measures head orientation, or implement iris-based gaze.
-9. **Add a license and finalized citation metadata** before describing the repository as open source.
 
 ## Privacy and research-data handling
 
